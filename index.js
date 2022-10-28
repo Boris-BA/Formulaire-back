@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const API_KEY = process.env.API_KEY;
@@ -12,10 +13,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-console.log(API_KEY);
-
 app.post("/send-email", async (req, res) => {
-  res.json({ message: "Route ok" });
+  //   res.json({ message: "Route ok" });
   try {
     const messageData = {
       from: `${req.body.prenom} ${req.body.nom} <${req.body.email}>`,
@@ -25,7 +24,7 @@ app.post("/send-email", async (req, res) => {
     };
     const result = await client.messages.create(DOMAIN, messageData);
     console.log(req.body);
-    // res.json(result);
+    res.json(result);
   } catch (error) {
     console.log(error);
     res.status(400).json(error.message);
